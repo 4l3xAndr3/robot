@@ -1,0 +1,34 @@
+linguistique
+{
+
+    Near := rampe_bas(150,300);
+    Far  := rampe_haut(150,300);
+
+
+    NearObst := rampe_bas(160, 250.0);
+    FarObst  := rampe_haut(160, 250.0);
+
+
+    onRight := rampe_bas(-90.0, 0);
+    inFront := triangle(-90.0, 0.0, 90.0);
+    onLeft  := rampe_haut(0.0, 90.0);
+
+    Stop := triangle(-10.0, 0.0, 10.0);
+    Slow := triangle(0.0, 50.0, 100.0);
+    Fast := triangle(100.0, 150.0, 200.0);
+
+
+    turnRight  := triangle(-200.0,-100.0,0.0);
+    straightOn := triangle(-100.0,0,100.0);
+    turnLeft   := triangle(0.0,100.0,200.0);
+}
+
+regles
+{
+    si DirecGoal est inFront  alors Sang est straightOn;
+    si DirecGoal est onLeft  alors Sang est turnLeft;
+    si DirecGoal est onRight alors Sang est turnRight;
+    
+    si DistGoal est Far alors Slin est Fast;
+    si DistGoal est Near alors Slin est Slow;
+}

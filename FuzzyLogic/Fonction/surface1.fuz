@@ -1,0 +1,22 @@
+configuration
+{
+ et := min;
+ ou := max;
+ decodage := centre;
+ implication :=  larsen;
+ ainsi_que := somme;
+}
+linguistique
+{
+    Petit := rampe_bas(0, 0.5);
+    Grand := rampe_haut(0, 0.5);
+
+    PetitZ := triangle(-0.5, 0, 0.5);
+    GrandZ := triangle(11.5, 12, 12.5);
+}
+regles
+{
+    si X est Petit ou Y est Petit alors Z est PetitZ;
+    si X est Grand et Y est Grand alors Z est GrandZ;
+    
+}

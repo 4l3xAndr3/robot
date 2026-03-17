@@ -1,0 +1,48 @@
+
+linguistique
+{
+    // objectif
+        //direction vers l'objectif
+        onRight := rampe_bas(-90.0,0);
+        inFront := triangle(-90.0,0.0,90.0);
+        onLeft  := rampe_haut(0.0,90.0);
+
+        turnRight  := triangle(-200.0,-100.0,0.0);
+        straightOn := triangle(-100.0,0,100.0);
+        turnLeft   := triangle(0.0,100.0,200.0);
+
+        //aller a l'objectif
+        proche := rampe_bas(150,300);
+        loin := rampe_haut(150,300);
+
+        rapide :=  triangle(100.0, 150.0, 200.0);
+        lent := triangle(0.0, 50.0, 100.0);
+
+
+    // obstacle
+        //jsp
+        proche_obj := rampe_bas(150,300);
+        loin_obj := rampe_haut(150,300);
+}
+
+
+regles
+{
+    //gestion de l'evitement de l'objet        
+        si ObstFront est proche_obj alors Slin est lent;
+        si ObstFront est proche_obj et ObstLeft est proche_obj alors Sang est turnRight;
+        si ObstFront est proche_obj et ObstRight est proche_obj alors Sang est turnLeft;
+
+    //gestion de direction ver objectif
+        si DirecGoal est inFront et ObstFront est loin_obj alors Sang est straightOn;
+        si DirecGoal est onLeft et ObstLeft  est loin_obj alors Sang est turnLeft;
+        si DirecGoal est onRight et ObstRight est loin_obj alors Sang est turnRight;
+
+        si DistGoal est loin et ObstFront est loin_obj alors Slin est rapide;
+        si DistGoal est proche alors Slin est lent;
+
+        
+
+
+        si ObstFront est proche_obj et ObstLeft est proche_obj et ObstRight est proche_obj alors Sang est turnLeft;
+}           
