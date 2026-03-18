@@ -1,23 +1,23 @@
 linguistique
 {
+    // --- DISTANCE AU BUT ---
+    Near := rampe_bas(100,300);
+    Far  := rampe_haut(100,300);
 
-    Near := rampe_bas(150,300);
-    Far  := rampe_haut(150,300);
+    // --- DISTANCE OBSTACLES ---
+    NearObst := rampe_bas(120, 250.0);
+    FarObst  := rampe_haut(120, 250.0);
 
-
-    NearObst := rampe_bas(160, 250.0);
-    FarObst  := rampe_haut(160, 250.0);
-
-
+    // --- ORIENTATION ---
     onRight := rampe_bas(-90.0, 0);
     inFront := triangle(-90.0, 0.0, 90.0);
     onLeft  := rampe_haut(0.0, 90.0);
 
-    Stop := triangle(-10.0, 0.0, 10.0);
-    Slow := triangle(0.0, 50.0, 100.0);
+    // --- VITESSE LINEAIRE (Slin) ---
+    Slow := triangle(-50.0, 50.0, 100.0);
     Fast := triangle(100.0, 150.0, 200.0);
 
-
+    // --- VITESSE ANGULAIRE (Sang) ---
     turnRight  := triangle(-200.0,-100.0,0.0);
     straightOn := triangle(-100.0,0,100.0);
     turnLeft   := triangle(0.0,100.0,200.0);
@@ -25,10 +25,19 @@ linguistique
 
 regles
 {
-    si DirecGoal est inFront  alors Sang est straightOn;
-    si DirecGoal est onLeft  alors Sang est turnLeft;
-    si DirecGoal est onRight alors Sang est turnRight;
+//direction
+    //direction vers objectif
+    si DirecGoal est inFront et ObstFront est FarObst alors Sang est straightOn;//R1
+    si DirecGoal est onLeft et ObstLeft est FarObst alors Sang est turnLeft; //R2
+    si DirecGoal est onRight et ObstRight est FarObst alors Sang est turnRight; //R3
+
+    //evitement de objectif
+    si ObstFront est NearObst et ObstLeft est NearObst alors Sang est turnRight;//R4
+    si ObstFront est NearObst et ObstRight est NearObst alors Sang est turnLeft;//R5
+
     
-    si DistGoal est Far alors Slin est Fast;
-    si DistGoal est Near alors Slin est Slow;
+//vitesse
+    si DistGoal est Far et ObstFront est FarObst alors Slin est Fast;//R6
+    si DistGoal est Near alors Slin est Slow;//R7
+    si ObstFront est NearObst alors Slin est Slow;//R8
 }
